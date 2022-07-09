@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import {ScrollView, Alert, ActivityIndicator} from 'react-native';
-import {View, Text} from 'react-native-ui-lib';
+import {View, Text, Card, ListItem} from 'react-native-ui-lib';
 import {observer} from 'mobx-react';
 import {If} from '@kanzitelli/if-component';
 
@@ -28,59 +28,62 @@ export const Main: React.FC = observer(({}) => {
     start();
   }, []);
 
+  const shortTeamName = (teamName: string) => {
+    return teamName.length > 20 ? teamName.substring(0, 20) + '...' : teamName;
+  }
+
   return (
     <View flex bg-bgColor>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View padding-s4>
-          <Section title={t.do('section.navigation.title')}>
-            <BButton
-              marginV-s1
-              label={t.do('section.navigation.button.push')}
-              onPress={() => nav.push('Example', {value: randomNum()})}
+      <ScrollView contentInsetAdjustmentBehavior="automatic" marginV-10 >
+        <Card flex  marginT-20 padding-10 marginL-10 marginR-10  borderRadius={30}>
+          <Card.Section
+              content={[{text: 'Soccer ⚽', text90L: true, grey10: true}]}
+              contentStyle={{alignItems: 'center'}}
+              marginB-5
             />
-            <BButton
-              marginV-s1
-              label={t.do('section.navigation.button.show')}
-              onPress={() => nav.show('ExampleModal')}
+            <Card.Section
+              content={[{text: 'Willem II - Telstar', text90L: true, grey10: true}]}
+              contentStyle={{alignItems: 'center'}}
             />
-            <BButton
-              marginV-s1
-              label={t.do('section.navigation.button.sharedTransition')}
-              onPress={() => Alert.alert('future feature: shared transition')}
+          <ListItem.Part row>
+            <Text grey10 text30L marginL-60>
+              0
+            </Text>
+            <Text grey10 text40L>
+              -
+            </Text>
+            <Text grey10 text30L marginR-60>
+              2
+            </Text>
+          </ListItem.Part>
+
+        </Card>
+
+        <Card flex  marginT-20 padding-10 marginL-10 marginR-10  borderRadius={30}>
+          <Card.Section
+              content={[{text: 'Basketball 🏀', text90L: true, grey10: true}]}
+              contentStyle={{alignItems: 'center'}}
+              marginB-5
             />
-          </Section>
+            <Card.Section
+              content={[{text: `${shortTeamName("Cleveland Cavaliers")} - ${shortTeamName("San Antonio Spurs")}`, text90L: true, grey10: true}]}
+              contentStyle={{alignItems: 'center'}}
+            />
+          <ListItem.Part row>
+            <Text grey10 text30L marginL-60>
+              105
+            </Text>
+            <Text grey10 text40L>
+              -
+            </Text>
+            <Text grey10 text30L marginR-60>
+              92
+            </Text>
+          </ListItem.Part>
 
-          <Section title="Reanimated 2">
-            <Reanimated2 stID="reanimated2" />
-          </Section>
+        </Card>
 
-          <Section title="MobX">
-            <View centerV>
-              <Text marginB-s2 text60R textColor>
-                App launches: {ui.appLaunches}
-              </Text>
-              <Text marginB-s2 text60R textColor>
-                Counter:{' '}
-                <If
-                  _={counter.loading}
-                  _then={() => <ActivityIndicator />}
-                  _else={<Text>{counter.value}</Text>}
-                />
-              </Text>
-              <BButton margin-s1 label="-" onPress={counter.dec} />
-              <BButton margin-s1 label="+" onPress={counter.inc} />
-              <BButton margin-s1 label="reset" onPress={counter.reset} />
-            </View>
-          </Section>
-
-          <Section title="API">
-            <BButton margin-s1 label="Update counter value from API" onPress={api.counter.get} />
-          </Section>
-
-          <Text textColor center>
-            localized with i18n-js
-          </Text>
-        </View>
+    
       </ScrollView>
     </View>
   );
