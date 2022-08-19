@@ -5,14 +5,16 @@ import {Settings} from './settings';
 import {Example} from './screen-sample';
 import {genRootNavigator, genStackNavigator, genTabNavigator} from '../services/navigation/help';
 import {screenDefaultOptions, tabBarDefaultOptions} from '../services/navigation/options';
-
+import { SortScreen } from './sortScreen';
+import { ChatScreen } from './ChatScreen';
 // Describe your screens here
 export type Tabs = 'Main' | 'WIP' | 'Settings';
-export type Modal = 'ExampleModal';
-export type Screen = 'Main' | 'Example' | 'Settings';
+export type Modal = 'SortModal' | "ChatModal";
+export type Screen = 'Main' | 'Example' | 'Settings' | 'SortScreen' | 'ChatScreen';
 
 export type ModalProps = {
-  ExampleModal: undefined;
+  SortModal: undefined;
+  ChatModal: undefined;
 };
 export type ScreenProps = {
   Main: undefined;
@@ -38,6 +40,22 @@ const screens: ScreenLayouts = {
       ...screenDefaultOptions(),
     }),
   },
+  SortScreen : {
+    name: 'SortScreen',
+    component: SortScreen,
+    options: () => ({
+      title: 'Sort Screen',
+      ...screenDefaultOptions(),
+    })
+  },
+  ChatScreen : {
+    name: 'ChatScreen',
+    component: ChatScreen,
+    options: () => ({
+      title: 'Chat',
+      ...screenDefaultOptions(),
+    })
+  },
   Settings: {
     name: 'Settings',
     component: Settings,
@@ -50,7 +68,8 @@ const screens: ScreenLayouts = {
 const HomeStack = () => genStackNavigator([screens.Main, screens.Example]);
 const ExampleStack = () => genStackNavigator([screens.Example]);
 const SettingsStack = () => genStackNavigator([screens.Settings]);
-const ExampleModalStack = () => genStackNavigator([screens.Main, screens.Example]);
+const ExampleModalStack = () => genStackNavigator([screens.SortScreen]);
+const ChatModel = () => genStackNavigator([screens.ChatScreen]);
 
 // Tabs
 const tabs: TabScreenLayouts = {
@@ -83,15 +102,22 @@ const TabNavigator = () => genTabNavigator([tabs.Main, tabs.WIP, tabs.Settings])
 
 // Modals
 const modals: ModalScreenLayouts = {
-  ExampleModal: {
-    name: 'ExampleModal',
+  SortModal: {
+    name: 'SortModal',
     component: ExampleModalStack,
     options: () => ({
-      title: 'ExampleModal',
+      title: 'SortModal',
+    }),
+  },
+  ChatModal: {
+    name: 'ChatModal',
+    component: ChatModel,
+    options: () => ({
+      title: 'ChatModel',
     }),
   },
 };
 
 // Root Navigator
 export const RootNavigator = (): JSX.Element =>
-  genRootNavigator(TabNavigator, [modals.ExampleModal]);
+  genRootNavigator(TabNavigator, [modals.SortModal, modals.ChatModal]);

@@ -42,7 +42,7 @@ export const Example: React.FC<Props> = observer(({route}) => {
               <BButton
                 marginV-s1
                 label={t.do('section.navigation.button.show')}
-                onPress={() => nav.show('ExampleModal')}
+                onPress={() => nav.show('SortModal')}
               />
               <BButton
                 marginV-s1

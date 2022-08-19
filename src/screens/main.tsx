@@ -4,6 +4,7 @@ import {View, Text, Card, ListItem} from 'react-native-ui-lib';
 import {observer} from 'mobx-react';
 import {If} from '@kanzitelli/if-component';
 
+
 import {useServices} from '../services';
 import {useStores} from '../stores';
 
@@ -11,6 +12,7 @@ import {Section} from '../components/section';
 import {Reanimated2} from '../components/reanimated2';
 import {randomNum} from '../utils/help';
 import {BButton} from '../components/button';
+import { FloatingAction } from "react-native-floating-action";
 
 export const Main: React.FC = observer(({}) => {
   const {nav, t, api} = useServices();
@@ -85,6 +87,9 @@ export const Main: React.FC = observer(({}) => {
 
     
       </ScrollView>
+        <FloatingAction onPressMain={()=>{
+          nav.push("ChatModal");
+        }}/>
     </View>
   );
 });
