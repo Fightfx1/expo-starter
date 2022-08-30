@@ -23,13 +23,13 @@ export const screenDefaultOptions = (): NativeStackNavigationOptions => ({
   }),
 });
 
-export const tabBarDefaultOptions = (routeName: string): BottomTabNavigationOptions => ({
+export const tabBarDefaultOptions = (routeName: string, comunity : boolean): BottomTabNavigationOptions => ({
   headerShown: false,
   tabBarActiveTintColor: Colors.primary,
   tabBarInactiveTintColor: Colors.grey40,
   tabBarStyle: {backgroundColor: Colors.bgColor, borderTopWidth: 0, elevation: 0},
   tabBarIcon: ({focused, color, size}) => (
-    <Icon name={getIconName(routeName, focused)} size={size} color={color} />
+    <Icon name={getIconName(routeName, focused)} size={size} color={color} comunity={comunity} />
   ),
 });
 
@@ -38,11 +38,20 @@ const getIconName = (routeName: string, focused: boolean): string => {
     return focused ? 'newspaper' : 'newspaper-outline';
   }
   if (routeName === 'ExampleNavigator') {
-    return focused ? 'construct' : 'construct-outline';
+    return focused ? 'construct' : 'construct';
   }
   if (routeName === 'SettingsNavigator') {
     return focused ? 'cog' : 'cog-outline';
   }
+  if (routeName === 'DailyTip') {
+    return focused ? 'poker-chip' : 'poker-chip';
+  }
+  if (routeName == "Premium"){
+    return focused ? "crown" : "crown"
+  }
 
+  if (routeName == "Profile"){
+    return "person-circle-outline"
+  }
   return 'list';
 };

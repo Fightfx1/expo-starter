@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {View, Colors, ViewProps} from 'react-native-ui-lib';
 import {Ionicons} from '@expo/vector-icons';
 import {Bounceable} from 'rn-bounceable';
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 type IconProps = {
   name: string;
   size?: number;
@@ -10,6 +10,7 @@ type IconProps = {
   viewProps?: ViewProps;
   onPress?: PureFunc;
   bounceable?: boolean;
+  comunity: boolean;
 };
 
 const ICON_SIZE = 26;
@@ -22,11 +23,12 @@ export const Icon: React.FC<IconProps> = ({
   viewProps,
   onPress,
   bounceable = true,
+  comunity = false,
 }: IconProps) => {
   const Icon = useMemo(
     () => (
       <View {...viewProps}>
-        <IconComponent name={name} size={size} color={color} />
+        {comunity ? ( <MaterialCommunityIcons name={name} size={size} color={color} /> ) : ( <Ionicons name={name} size={size} color={color} /> )}
       </View>
     ),
     [viewProps, name, size, color],

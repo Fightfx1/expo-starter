@@ -7,10 +7,12 @@ import {genRootNavigator, genStackNavigator, genTabNavigator} from '../services/
 import {screenDefaultOptions, tabBarDefaultOptions} from '../services/navigation/options';
 import { SortScreen } from './sortScreen';
 import { ChatScreen } from './ChatScreen';
+import DailyTipScreen from './DailyTipScreen';
+import BuyTipScreen from './BuyTipScreen';
 // Describe your screens here
-export type Tabs = 'Main' | 'WIP' | 'Settings';
+export type Tabs = 'Main' | 'WIP' | 'Settings' | 'DailyTip';
 export type Modal = 'SortModal' | "ChatModal";
-export type Screen = 'Main' | 'Example' | 'Settings' | 'SortScreen' | 'ChatScreen';
+export type Screen = 'Main' | 'Example' | 'Settings' | 'SortScreen' | 'ChatScreen' | 'DailyTip' | "BuyTipScreen";
 
 export type ModalProps = {
   SortModal: undefined;
@@ -20,6 +22,8 @@ export type ScreenProps = {
   Main: undefined;
   Example: ExampleScreenProps;
   Settings: undefined;
+  DailyTip: undefined;
+  BuyTipScreen : undefined;
 } & ModalProps;
 
 // Screens
@@ -64,10 +68,27 @@ const screens: ScreenLayouts = {
       ...screenDefaultOptions(),
     }),
   },
+  DailyTip : {
+    name: 'DailyTip',
+    component: DailyTipScreen,
+    options: () => ({
+      title: 'DailyTip',
+      ...screenDefaultOptions(),
+    }),
+  },
+  BuyTipScreen : {
+    name: 'BuyTipScreen',
+    component: BuyTipScreen,
+    options: () => ({
+      title: 'BuyTipScreen',
+      headerShown : false
+    }),
+  }
 };
 const HomeStack = () => genStackNavigator([screens.Main, screens.Example]);
 const ExampleStack = () => genStackNavigator([screens.Example]);
 const SettingsStack = () => genStackNavigator([screens.Settings]);
+const DailyTipStack = () => genStackNavigator([screens.DailyTip, screens.BuyTipScreen]);
 const ExampleModalStack = () => genStackNavigator([screens.SortScreen]);
 const ChatModel = () => genStackNavigator([screens.ChatScreen]);
 
@@ -78,27 +99,35 @@ const tabs: TabScreenLayouts = {
     component: HomeStack,
     options: () => ({
       title: 'Home',
-      ...tabBarDefaultOptions('MainNavigator'),
+      ...tabBarDefaultOptions('MainNavigator',false),
     }),
   },
   WIP: {
-    name: 'ExampleNavigator',
+    name: 'Premium',
     component: ExampleStack,
     options: () => ({
-      title: 'WIP',
-      ...tabBarDefaultOptions('ExampleNavigator'),
+      title: 'Premium',
+      ...tabBarDefaultOptions('Premium',true),
     }),
   },
   Settings: {
-    name: 'SettingsNavigator',
+    name: 'Profile',
     component: SettingsStack,
     options: () => ({
-      title: 'Settings',
-      ...tabBarDefaultOptions('SettingsNavigator'),
+      title: 'Profile',
+      ...tabBarDefaultOptions('Profile',false),
     }),
   },
+  DailyTip : {
+    name: 'DailyTip',
+    component: DailyTipStack,
+    options: () => ({
+      title: 'Tip',
+      ...tabBarDefaultOptions('DailyTip',true),
+    }),
+  }
 };
-const TabNavigator = () => genTabNavigator([tabs.Main, tabs.WIP, tabs.Settings]);
+const TabNavigator = () => genTabNavigator([tabs.Main, tabs.WIP, tabs.DailyTip, tabs.Settings]);
 
 // Modals
 const modals: ModalScreenLayouts = {
